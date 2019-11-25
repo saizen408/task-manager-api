@@ -1,7 +1,10 @@
-
-console.log("Client Side JavaScript file is loaded")
 var userInfo;
 
+$(document).ready(function($) {
+    $(document).on('submit', '.ui.form', function(event) {
+      event.preventDefault();
+    });
+  });
 
 if(!userInfo){
     $('#task_input_form').toggle();
@@ -20,25 +23,20 @@ $('.message .close')
   })
 ;
 
-
 //signup form credentials
-const signupForm = document.getElementById('signup_form')
+const signupForm = document.getElementById('sign_up_btn')
 const signupName = document.getElementById('signup_name')
 const signupEmail = document.getElementById('signup_email')
 const signupPass = document.getElementById('signup_pass')
 
-
-
 //login form credentials
-const loginForm = document.getElementById('login_form')
+const loginForm = document.getElementById('log_in_btn')
 const inputEmail = document.getElementById('input_email')
 const inputPassword = document.getElementById('input_password')
 
-
-
 //new user instance
-signupForm.addEventListener('submit1', async (e) => {
-    
+signupForm.addEventListener('click', async (e) => {
+   
     const sName = signupName.value
     const sEmail = signupEmail.value
     const sPass = signupPass.value
@@ -47,8 +45,7 @@ signupForm.addEventListener('submit1', async (e) => {
             email: sEmail,
             password: sPass
         }
-        e.preventDefault();
-        
+
     try {
         const sResponse = await fetch('/users', {
 
@@ -68,11 +65,12 @@ signupForm.addEventListener('submit1', async (e) => {
 
     } catch (error) {
         console.error('Error:', error)
+
     }
 
 })
 //existing user instance
-loginForm.addEventListener('submit', async (e) => {
+loginForm.addEventListener('click', async (e) => {
     
     const email = inputEmail.value
     const password = inputPassword.value
@@ -80,7 +78,6 @@ loginForm.addEventListener('submit', async (e) => {
             email,
             password
         }
-    e.preventDefault()
 
     try {
         const response = await fetch('/users/login', {
@@ -100,7 +97,7 @@ loginForm.addEventListener('submit', async (e) => {
         $('#task_input_form').toggle();
         
     } catch (error) {
-        console.error('Error:', error)
+        console.error('Error:', error)  
     }
 })
 
@@ -215,7 +212,7 @@ function updateTask(task) {
 }
 
 function fetchTasks() {
-    // $(document).ready(function(){
+    
         $('.jiggle_task').transition('jiggle');
 
         $.ajax({

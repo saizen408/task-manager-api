@@ -11,7 +11,7 @@ test('Should signup a new user', async () => {
         email: 'eric@example.com',
         password: 'Mypass777!'
     })
-    .expect(201)
+    .expect(200)
 
 
     //Assert that the database was changed correctly
