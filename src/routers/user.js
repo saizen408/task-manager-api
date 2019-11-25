@@ -1,10 +1,60 @@
 const express = require('express')
 const User = require('../models/user')
+// const handlebars = require('handlebars')
+// const hbs = require('hbs')
 const auth = require('../middleware/auth')
 const multer = require('multer')
 const sharp = require('sharp')
+// const request = require('request')
 const { sendWelcomeEmail, sendCancelationEmail } = require('../emails/account')
 const router = new express.Router()
+
+
+
+router.get('', async (req, res) => {
+
+    try {
+        res.render('index', {
+            title: 'Task App',
+            name: 'Eric Owusu',
+            active: 'active item'
+        })
+
+    } catch (e) {
+        res.status(400).render('status400')
+    }
+})
+
+router.get('/about', async (req, res) => {
+
+    try {
+        res.render('about', {
+            title: 'About',
+            name: 'Eric Owusu',
+            active: 'active item'
+            
+        })
+
+    } catch (e) {
+        res.status(400).render('status400')
+    }
+})
+
+router.get('/help', async (req, res) => {
+
+    try {
+        res.render('help', {
+            title: 'Help',
+            name: 'Eric Owusu',
+            active: 'active item'
+            
+        })
+
+    } catch (e) {
+        res.status(400).render('status400')
+    }
+})
+
 
 
 router.post('/users', async (req, res) => {
@@ -14,7 +64,8 @@ router.post('/users', async (req, res) => {
         await user.save()
         sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
+        
+        res.status(201).send( { user, token })
     } catch (e) {
         res.status(400).send(e)
     }
@@ -25,6 +76,7 @@ router.post('/users/login', async (req,res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         res.send({ user, token })
+       
     } catch (e) {
         res.status(400).send()
     }
@@ -128,6 +180,14 @@ router.get('/users/:id/avatar', async (req, res) => {
     } catch (e) {
         res.status(404).send()
     }
+})
+
+router.get('/users/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        error: 'User page not found',
+        name: 'Eric Owusu'
+    })
 })
 
 module.exports = router

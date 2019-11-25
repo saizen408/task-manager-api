@@ -82,7 +82,7 @@ userSchema.methods.generateAuthToken = async function () { //methods are are acc
     
 
     user.tokens = user.tokens.concat({ token })
-    await user.save()
+    await user.save() 
 
     return token
 

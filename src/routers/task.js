@@ -1,4 +1,8 @@
+// const handlebars = require('handlebars')
+// const hbs = require('hbs')
+
 const express = require('express')
+
 const Task = require('../models/task')
 const auth = require ('../middleware/auth')
 const router = new express.Router()
@@ -105,6 +109,14 @@ router.delete('/tasks/:id', auth, async (req, res) => {
     } catch (e) {
         res.status(500).send()
     }
+})
+
+router.get('/tasks/*', (req, res) => {
+    res.render('404', {
+        title: '404',
+        error: 'Task page not found',
+        name: 'Eric Owusu'
+    })
 })
 
 module.exports = router
