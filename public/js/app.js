@@ -35,7 +35,7 @@ const inputEmail = document.getElementById('input_email')
 const inputPassword = document.getElementById('input_password')
 
 //new user instance
-signupForm.addEventListener('click', async (e) => {
+signupForm.addEventListener('click', async () => {
    
     const sName = signupName.value
     const sEmail = signupEmail.value
@@ -70,7 +70,7 @@ signupForm.addEventListener('click', async (e) => {
 
 })
 //existing user instance
-loginForm.addEventListener('click', async (e) => {
+loginForm.addEventListener('click', async () => {
     
     const email = inputEmail.value
     const password = inputPassword.value
@@ -89,6 +89,7 @@ loginForm.addEventListener('click', async (e) => {
         });
 
         userInfo = await response.json();
+        
         fetchTasks();
         activateListeners();
         $('.ui.form').remove()
@@ -212,19 +213,19 @@ function updateTask(task) {
 }
 
 function fetchTasks() {
-    
-        $('.jiggle_task').transition('jiggle');
 
-        $.ajax({
-            url: '/tasks',
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: setHeader
-        }).then(addTasks)
+    $('.jiggle_task').transition('jiggle');
 
-        function setHeader(xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + userInfo.token)
-        } 
+    $.ajax({
+        url: '/tasks',
+        type: 'GET',
+        dataType: 'json',
+        beforeSend: setHeader
+    }).then(addTasks)
+
+    function setHeader(xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + userInfo.token)
+    } 
 }
 
 //login form validation
